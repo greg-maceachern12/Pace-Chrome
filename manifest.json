@@ -1,0 +1,26 @@
+{
+    "manifest_version": 3,
+    "name": "Strava Unit Toggle Converter",
+    "version": "1.0",
+    "description": "Toggle between imperial and metric units on Strava.com",
+    "permissions": [
+      "storage",
+      "activeTab"
+    ],
+    "host_permissions": [
+      "*://*.strava.com/*"
+    ],
+    "content_scripts": [
+      {
+        "matches": ["*://*.strava.com/*"],
+        "js": ["content.js"],
+        "run_at": "document_idle"
+      }
+    ],
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "icon48.png"
+      }
+    }
+  }
