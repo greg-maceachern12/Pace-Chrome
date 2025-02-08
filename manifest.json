@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Strava Unit Toggle Converter",
+    "name": "Strava Unit Converter",
     "version": "1.0",
     "description": "Toggle between imperial and metric units on Strava.com",
     "permissions": [
