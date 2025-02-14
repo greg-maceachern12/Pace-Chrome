@@ -31,9 +31,10 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: #e5e7eb;
-      transition: .2s;
+      background-color: #3B82F6;
+      transition: .4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
       border-radius: 34px;
+      overflow: hidden;
     }
 
     .slider:before {
@@ -44,9 +45,48 @@
       left: 4px;
       bottom: 4px;
       background-color: white;
-      transition: .2s;
+      transition: .4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
       border-radius: 50%;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      z-index: 2;
+    }
+
+    .slider svg {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      transition: .4s;
+    }
+
+    .slider .imperial-icon {
+      left: 7px;
+      top: 7px;
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .slider .metric-icon {
+      right: 7px;
+      top: 7px;
+      opacity: 0;
+      fill: white;
+    }
+
+    input:checked + .slider .imperial-icon {
+      opacity: 0;
+    }
+
+    input:checked + .slider .metric-icon {
+      opacity: 1;
+    }
+
+    input:checked + .slider {
+      background-color: #2563EB;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+      background-color: white;
     }
 
     input:checked + .slider {
@@ -57,47 +97,176 @@
       transform: translateX(20px);
     }
 
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #2563EB;
+      transition: .4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      border-radius: 34px;
+      overflow: hidden;
+    }
+
+    .slider svg {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      transition: .4s;
+    }
+
+    .slider .imperial-icon {
+      left: 7px;
+      top: 7px;
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .slider .imperial-icon path {
+      stroke: #2563EB;
+      transition: .4s;
+    }
+
+    .slider .metric-icon {
+      right: 7px;
+      top: 7px;
+      opacity: 0;
+    }
+
+    .slider .metric-icon path {
+      stroke: white;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      z-index: 2;
+    }
+
+    input:checked + .slider {
+      background-color: #FC4C02;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    input:checked + .slider .imperial-icon {
+      opacity: 0;
+    }
+
+    input:checked + .slider .metric-icon {
+      opacity: 1;
+    }
+
     .unit-label {
-      transition: .2s;
+      transition: all 0.3s ease;
       opacity: 0.6;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #6B7280;
+      font-weight: 500;
     }
 
     .unit-label.active {
       opacity: 1;
-      font-weight: 500;
+    }
+
+    /* Imperial styles */
+    .unit-label.imperial .unit-icon path {
+      stroke: #6B7280;
+    }
+
+    .unit-label.imperial.active {
+      color: #2563EB;
+    }
+
+    .unit-label.imperial.active .unit-icon path {
+      stroke: #2563EB;
+    }
+
+    /* Metric styles */
+    .unit-label.metric .unit-icon path {
+      stroke: #6B7280;
+    }
+
+    .unit-label.metric.active {
+      color: #FC4C02;
+    }
+
+    .unit-label.metric.active .unit-icon path {
+      stroke: #FC4C02;
     }
 
     #status {
       opacity: 0;
       transition: opacity 0.3s ease-in-out;
+      transform: translateY(10px);
     }
 
     #status.visible {
       opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+
+    .header-logo {
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    .preference-card {
+      transition: .3s ease;
+    }
+
+    .preference-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     }
   </style>
 </head>
 <body class="p-4">
   <div class="flex items-center justify-between mb-6">
-    <img src="icon48.png" alt="Logo" class="w-8 h-8">
-    <div class="text-sm text-gray-500">Strava Unit Converter</div>
+    <img src="icon48.png" alt="Logo" class="w-8 h-8 header-logo">
+    <div class="text-sm text-gray-500 font-medium">Strava Unit Converter</div>
   </div>
 
-  <div class="bg-gray-50 rounded-lg p-4 mb-4">
-    <div class="flex items-center justify-between mb-2">
-      <span class="font-medium text-gray-900">Unit Preference</span>
-      <label class="switch">
-        <input type="checkbox" id="toggle">
-        <span class="slider"></span>
-      </label>
-    </div>
-    <div class="flex justify-between text-sm px-1">
-      <span class="unit-label imperial">Imperial</span>
-      <span class="unit-label metric">Metric</span>
+  <div class="bg-gray-50 rounded-lg p-4 mb-4 preference-card">
+    <div class="space-y-4">
+      <div class="flex items-center justify-between">
+        <span class="unit-label imperial">
+          Imperial
+        </span>
+        <label class="switch">
+          <input type="checkbox" id="toggle">
+          <span class="slider"></span>
+        </label>
+        <span class="unit-label metric">
+          Metric
+        </span>
+      </div>
+      <div class="text-xs text-gray-500 text-center">
+        Switch between Imperial and Metric units
+      </div>
     </div>
   </div>
 
-  <div id="status" class="text-sm text-gray-600 bg-gray-50 rounded-lg p-3 text-center">
+  <div id="status" class="text-sm text-gray-600 bg-gray-50 rounded-lg p-3 text-center transition-all duration-300">
     Settings updated
   </div>
 
